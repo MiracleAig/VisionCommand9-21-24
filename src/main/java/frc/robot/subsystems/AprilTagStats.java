@@ -8,7 +8,9 @@ import org.photonvision.PhotonCamera;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.wpilibj.smartdashboard.*;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -16,11 +18,22 @@ import frc.robot.Robot;
 public class AprilTagStats extends SubsystemBase {
 
   //set cameras 
-  PhotonCamera driverCam = new PhotonCamera("HD_Pro_Webcam_C920");
+  // PhotonCamera driverCam = new PhotonCamera("HD_Pro_Webcam_C920");
   PhotonCamera aprilTagCam = new PhotonCamera("Microsoft_LifeCam_HD-3000");
+  private ShuffleboardTab tab = Shuffleboard.getTab("Vision");
+  private GenericEntry yaw =
+      tab.add("yaw", 0)
+         .getEntry();
+  private GenericEntry pitch =
+      tab.add("pitch", 0)
+         .getEntry();
+  private GenericEntry id =
+      tab.add("id", 0)
+         .getEntry();
+
 
   public AprilTagStats() {
-    driverCam.getDriverMode();
+    // driverCam.getDriverMode();
   }
 
   public void getStats() {
@@ -33,17 +46,20 @@ public class AprilTagStats extends SubsystemBase {
       
       // get data from camera
       int ID = target.getFiducialId();
-      double yaw = target.getYaw();
-      double pitch = target.getPitch();
-      Transform3d camToTarget = target.getBestCameraToTarget();
+      double yawD = target.getYaw();
+      double pitchD = target.getPitch();
+      // Transform3d camToTargetD = target.getBestCameraToTarget();
       
       // push to smart dashboard
-      SmartDashboard.putNumber("Back Cam Yaw", yaw);
-      SmartDashboard.putNumber("Back Cam Pitch", pitch);
-      SmartDashboard.putNumber("x Coordinate From Back", camToTarget.getX());
-      SmartDashboard.putNumber("y Coordinate From Back", camToTarget.getY());
-      SmartDashboard.putNumber("z Coordinate From Back", camToTarget.getZ());
-      SmartDashboard.putNumber("ID Number", ID);
+      // SmartDashboard.putNumber("Back Cam Yaw", yaw);
+      // SmartDashboard.putNumber("Back Cam Pitch", pitch);
+      // SmartDashboard.putNumber("x Coordinate From Back", camToTarget.getX());
+      // SmartDashboard.putNumber("y Coordinate From Back", camToTarget.getY());
+      // SmartDashboard.putNumber("z Coordinate From Back", camToTarget.getZ());
+      // SmartDashboard.putNumber("ID Number", ID);
+      yaw.setDouble(yawD);
+      pitch.setDouble(pitchD);
+      id.setInteger(ID);
     }
   }
 

@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     ats.getStats(); // gets the yaw, pitch, and XYZ coords of the bot
-    LEDManager.setLEDS();
+    //LEDManager.setLEDS(); this line breaks robot functionality 
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
